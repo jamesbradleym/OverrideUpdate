@@ -34,6 +34,26 @@
       }
     }
   },
+  "overrides": {
+    "Options": {
+      "$hyparOrder": 0,
+      "context": "[*discriminator=Elements.MyMass]",
+      "identity": {
+        "Name": {
+          "type": "string"
+        }
+      },
+      "schema": {
+        "Option": {
+          "type": "string",
+          "$hyparEnumQuery": {
+            "selfDependency": true,
+            "query": "[*discriminator=Elements.MassOptions].Options"
+          }
+        }
+      }
+    }
+  },
   "outputs": [
     {
       "unit_type": "volume",

@@ -23,18 +23,40 @@ namespace OverrideUpdate
             var volume = length * width * height;
             var output = new OverrideUpdateOutputs(volume);
             var rectangle = Polygon.Rectangle(length, width);
+
+            var massOptions = new MassOptions
+            {
+                Options = GenerateValidOptions(selectedOptionalNumber)
+            };
+            output.Model.AddElement(massOptions);
+
             var mass = new MyMass(rectangle, height)
             {
                 Name = name,
-                Options = new List<string>() {
-                  "Option A",
-                  "Option B",
-                  "Option C",
-                  "Option D",
-                  "Option E",
-                  "Option F",
-                }
+                // Apply a default value
+                Option = massOptions.Options.First()
             };
+
+            input.Overrides.Options.Apply(
+              new List<MyMass>() { mass },
+              (mass, identity) => mass.Name == identity.Name,
+              (mass, edit) =>
+              {
+                  // Check if the selected option is valid
+                  var optionIsValid = massOptions.Options.Contains(edit.Value.Option);
+                  if (optionIsValid)
+                  {
+                      // Apply the user selection because it is valid
+                      mass.Option = edit.Value.Option;
+                  }
+                  else
+                  {
+                      // Apply a default if the selected value is no longer valid
+                      mass.Option = massOptions.Options.Last();
+                  }
+                  return mass;
+              }
+            );
 
             output.Model.AddElement(mass);
             return output;
@@ -55,6 +77,19 @@ namespace OverrideUpdate
                 return initial;
             }
             return enumValue.Value.ToString();
+        }
+
+        public static List<string> GenerateValidOptions(double input)
+        {
+            var PrimaryOptions = new List<string>() {
+                  "Option A",
+                  "Option B",
+                  "Option C",
+                  "Option D",
+                  "Option E",
+                  "Option F",
+                };
+            return PrimaryOptions.GetRange(0, (int)input);
         }
     }
 }
