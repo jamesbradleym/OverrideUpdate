@@ -1,0 +1,48 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "564c2e89-0803-4448-aac1-5bd27ab6f06b",
+  "name": "Override Update",
+  "description": "The OverrideUpdate function.",
+  "language": "C#",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "Optional Number Enum": {
+        "type": [
+          "number",
+          "null"
+        ],
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "Optional String Enum": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "enum": [
+          "One",
+          "Two",
+          "Three"
+        ]
+      }
+    }
+  },
+  "outputs": [
+    {
+      "unit_type": "volume",
+      "name": "Volume",
+      "description": "The volume.",
+      "type": "number"
+    }
+  ],
+  "repository_url": "https://github.com/hypar-io/function",
+  "last_updated": "0001-01-01T00:00:00",
+  "cli_version": "1.10.0"
+}
